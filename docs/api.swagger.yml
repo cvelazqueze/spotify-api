@@ -1,0 +1,110 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: '0.0.1'
+  title: 'spotify-test API'
+  contact:
+    email: 'ceigvelazquez@gmail.com'
+host: 'localhost:3000'
+basePath: '/api/spotify'
+tags:
+  - name: 'Spotify Connection Test'
+    description: 'Spotify Connection Test'
+
+schemes:
+  - 'https'
+
+paths:
+  /albums/{band}:
+    get:
+      tags:
+        - 'Bands'
+      description: 'Get albums'
+      summary: 'Gets albums from a band'
+      parameters:
+        - in: 'path'
+          name: 'band'
+          type: 'string'
+          required: true
+          description: 'Band Name'
+      responses:
+        200:
+          description: 'Success'
+          schema:
+            $ref: '#/definitions/BandsAlbumsResponse'
+        401:
+          description: 'Unauthorized'   
+        404:
+          description: 'NotFound'
+  
+  /band/{bandName}/top-tracks:
+    get:
+      tags:
+        - 'Bands'
+      description: 'Get a Band Top Tracks'
+      summary: 'Get a band top tracks'
+      parameters:
+        - in: 'path'
+          name: 'bandName'
+          type: 'string'
+          required: true
+          description: 'Band Name'
+      responses:
+        200:
+          description: 'Success'
+          schema:
+            $ref: '#/definitions/BandTopTracks'
+        401:
+          description: 'Unauthorized'   
+        404:
+          description: 'NotFound'
+
+definitions:
+  BandsAlbumsResponse:
+    type: 'object'
+    properties:
+      name:
+        type: 'string'
+        example: 'Live At Largo'
+      released:
+        type: 'string'
+        example: '2021-04-02'
+        
+  BandTopTracks:
+    type: 'object'
+    properties:
+      tracks:
+        type: 'object'
+        properties:
+          album:
+            type: 'object'
+            properties:
+              album_type:
+                type: 'string'
+                example: 'album'
+              artists:
+                type: 'array'
+                items:
+                  type: 'object'
+                  properties:
+                    external_urls:
+                      type: 'object'
+                      properties:
+                        spotify: 
+                          type: 'string'
+                          example: 'https://open.spotify...'
+                    href:
+                      type: 'string'
+                      example: 'https://api.spotify...'
+                    id:
+                      type: 'string'
+                      example: 'lkdjasdjaASDJashjdjk'
+                    name:
+                      type: 'string'
+                      example: 'Beatles'
+                    type:
+                      type: 'string'
+                      example: 'artist'
+                    uri:
+                      type: 'string'
+                      example: 'spotify:artist:lkdjasdjaASDJashjdjk'
